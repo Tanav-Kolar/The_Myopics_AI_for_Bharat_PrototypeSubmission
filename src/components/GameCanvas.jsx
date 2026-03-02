@@ -1,6 +1,6 @@
-
 import { Box } from '@chakra-ui/react';
 import useStore from '../store';
+import Draggable from './Draggable';
 import { Droppable } from './Droppable';
 
 const Component = ({ name }) => (
@@ -16,14 +16,9 @@ const GameCanvas = () => {
     <Droppable id="canvas">
       <Box p={4} position="relative" w="full" h="full">
         {Object.values(canvasComponents).map((component) => (
-          <Box
-            key={component.id}
-            position="absolute"
-            left={`${component.position.x}px`}
-            top={`${component.position.y}px`}
-          >
+          <Draggable key={component.id} id={component.id} position={component.position}>
             <Component name={component.name} />
-          </Box>
+          </Draggable>
         ))}
       </Box>
     </Droppable>

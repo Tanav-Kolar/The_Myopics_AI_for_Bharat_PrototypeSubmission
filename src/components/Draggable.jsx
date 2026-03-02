@@ -1,22 +1,24 @@
-
-import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
-import { Box } from '@chakra-ui/react';
+import { CSS } from '@dnd-kit/utilities';
 
-export function Draggable({ id, data, children }) {
+function Draggable({ id, children, position = { x: 0, y: 0 } }) { // Default position
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: id,
-    data: data, // Pass component data
   });
 
-  const style = transform ? {
-    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-    zIndex: 10, // Ensure the dragged item is on top
-  } : undefined;
+  // If the component is in the panel, it doesn't need a transform
+  const style = position ? {
+    transform: CSS.Translate.toString(transform),
+    position: 'absolute',
+    left: position.x,
+    top: position.y,
+  } : {};
 
   return (
-    <Box ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
       {children}
-    </Box>
+    </div>
   );
 }
+
+export default Draggable;

@@ -1,5 +1,3 @@
-
-
 import { create } from 'zustand';
 import { nanoid } from 'nanoid';
 
@@ -12,7 +10,7 @@ const useStore = create((set) => ({
   ],
   // Components dropped onto the canvas
   canvasComponents: {},
-  
+
   // Function to add a component to the canvas
   addComponentToCanvas: (component, position) =>
     set((state) => {
@@ -24,6 +22,18 @@ const useStore = create((set) => ({
         },
       };
     }),
+
+  // Function to move a component within the canvas
+  moveComponent: (id, newPosition) =>
+    set((state) => ({
+      canvasComponents: {
+        ...state.canvasComponents,
+        [id]: {
+          ...state.canvasComponents[id],
+          position: newPosition,
+        },
+      },
+    })),
 }));
 
 export default useStore;
